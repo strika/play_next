@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+LAST = ""
+PLAYER_COMMAND = "mplayer"
+
+files = `ls`.split("\n")
+
+if LAST != ""
+  next_index = files.index(LAST) + 1
+else
+  next_index = 0
+end
+
+next_episode = files[next_index]
+
+command = "#{PLAYER_COMMAND} '#{next_episode}'"
+
+`sed -i 's/LAST = "/LAST = "#{next_episode}/' play_next`
+
+puts "Executing command: #{command}"
+`#{command}`
